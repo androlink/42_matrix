@@ -1,0 +1,11 @@
+
+debug
+target
+Cargo.lock
+*.rs.bk
+*.swp
+*.log
+.idea/
+.vscode/
+.rustc_info.json
+
