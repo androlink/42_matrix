@@ -1,5 +1,7 @@
 use super::Vector;
 use std::ops::Add;
+use std::ops::Index;
+use std::ops::IndexMut;
 use std::ops::Sub;
 use std::ops::AddAssign;
 use std::ops::SubAssign;
@@ -55,6 +57,21 @@ impl<K: SubAssign + Clone + Copy, const N: usize> SubAssign for Vector<K, N>
       self.data[i] -= other.data[i];
     }
     ()
+  }
+}
+
+impl<K: SubAssign + Clone + Copy, const N: usize> Index<usize> for Vector<K, N>
+{
+  type Output = K;
+  fn index(&self, index: usize) -> &Self::Output {
+      &self.data[index]
+  }
+}
+
+impl<K: SubAssign + Clone + Copy, const N: usize> IndexMut<usize> for Vector<K, N>
+{
+  fn index_mut(&mut self, index: usize) -> &mut K {
+      &mut self.data[index]
   }
 }
 

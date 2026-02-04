@@ -1,6 +1,8 @@
 use super::Matrix;
 
 use std::ops::Add;
+use std::ops::Index;
+use std::ops::IndexMut;
 use std::ops::Sub;
 use std::ops::AddAssign;
 use std::ops::SubAssign;
@@ -64,6 +66,21 @@ impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> SubAssign for 
       }
     }
     ()
+  }
+}
+
+impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> Index<usize> for Matrix<K, N, M>
+{
+  type Output = [K; N];
+  fn index(&self, index: usize) -> &Self::Output {
+      &self.data[index]
+  }
+}
+
+impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> IndexMut<usize> for Matrix<K, N, M>
+{
+  fn index_mut(&mut self, index: usize) -> &mut [K; N] {
+      &mut self.data[index]
   }
 }
 
