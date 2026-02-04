@@ -1,3 +1,4 @@
+
 mod operator;
 
 mod add;
@@ -19,6 +20,14 @@ impl<K: Clone, const N: usize> From<[K; N]> for Vector<K, N> {
     fn from(value: [K; N]) -> Self {
         Self { data: value }
     }
+}
+
+impl<K: Default + Copy, const N: usize> Default for Vector<K, N>
+{
+  fn default() -> Self
+  {
+    Self {data: [K::default(); N]}
+  }
 }
 
 #[cfg(test)]

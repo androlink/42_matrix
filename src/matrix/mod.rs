@@ -21,6 +21,14 @@ impl<K: Clone, const N: usize, const M: usize> From<[[K; N]; M]> for Matrix<K, N
     }
 }
 
+impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N, M>
+{
+  fn default() -> Self
+  {
+    Self {data: [[K::default(); N], M]}
+  }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
