@@ -25,7 +25,7 @@ impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N,
 {
   fn default() -> Self
   {
-    Self {data: [[K::default(); N], M]}
+    Self {data: [[K::default(); N]; M]}
   }
 }
 
