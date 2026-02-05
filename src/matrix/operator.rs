@@ -110,6 +110,16 @@ mod test {
         m1 += m2;
         assert_eq!(m1, res, "result {:?}, assert {:?}", m1, res);
     }
+
+    #[test]
+    fn add_test() {
+        let m1 = Matrix::from([[1., 2.], [3., 4.]]);
+        let m2 = Matrix::from([[7., 4.], [-2., 2.]]);
+        let res = [[8.0, 6.0], [1.0, 6.0]].into();
+        let result = m1 + m2;
+        assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
+    }
+
     #[test]
     fn sub_assign_test() {
         let mut m1 = Matrix::from([[1., 2.], [3., 4.]]);
@@ -118,20 +128,31 @@ mod test {
         m1 -= m2;
         assert_eq!(m1, res, "result {:?}, assert {:?}", m1, res);
     }
+
     #[test]
-    fn test_add() {
-        let m1 = Matrix::from([[1., 2.], [3., 4.]]);
-        let m2 = Matrix::from([[7., 4.], [-2., 2.]]);
-        let res = [[8.0, 6.0], [1.0, 6.0]].into();
-        let result = m1 + m2;
-        assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
-    }
-    #[test]
-    fn test_sub() {
+    fn sub_test() {
         let m1 = Matrix::from([[1., 2.], [3., 4.]]);
         let m2 = Matrix::from([[7., 4.], [-2., 2.]]);
         let res = [[-6.0, -2.0], [5.0, 2.0]].into();
         let result = m1 - m2;
+        assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
+    }
+
+    #[test]
+    fn mul_assign_test() {
+        let mut m1 = Matrix::from([[1., 2.], [3., 4.]]);
+        let scalar = 2.;
+        let res = [[2., 4.], [6., 8.]].into();
+        m1 *= scalar;
+        assert_eq!(m1, res, "result {:?}, assert {:?}", m1, res);
+    }
+    
+    #[test]
+    fn mul_test() {
+        let m1 = Matrix::from([[1., 2.], [3., 4.]]);
+        let scalar = 2.;
+        let res = [[2., 4.], [6., 8.]].into();
+        let result = m1 * scalar;
         assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
     }
 }
