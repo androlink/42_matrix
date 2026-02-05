@@ -4,6 +4,10 @@ mod sub;
 
 mod operator;
 
+pub type Mat2 = Matrix<f32, 2, 2>;
+pub type Mat3 = Matrix<f32, 3, 3>;
+pub type Mat4 = Matrix<f32, 4, 4>;
+
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Matrix<K, const N: usize, const M: usize> {
     data: [[K; N]; M],
@@ -21,12 +25,12 @@ impl<K: Clone, const N: usize, const M: usize> From<[[K; N]; M]> for Matrix<K, N
     }
 }
 
-impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N, M>
-{
-  fn default() -> Self
-  {
-    Self {data: [[K::default(); N]; M]}
-  }
+impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N, M> {
+    fn default() -> Self {
+        Self {
+            data: [[K::default(); N]; M],
+        }
+    }
 }
 
 #[cfg(test)]

@@ -1,9 +1,11 @@
-
 mod operator;
 
 mod add;
 mod scale;
 mod sub;
+
+pub type Vec2 = Vector<f32, 2>;
+pub type Vec3 = Vector<f32, 3>;
 
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Vector<K, const N: usize> {
@@ -22,12 +24,12 @@ impl<K: Clone, const N: usize> From<[K; N]> for Vector<K, N> {
     }
 }
 
-impl<K: Default + Copy, const N: usize> Default for Vector<K, N>
-{
-  fn default() -> Self
-  {
-    Self {data: [K::default(); N]}
-  }
+impl<K: Default + Copy, const N: usize> Default for Vector<K, N> {
+    fn default() -> Self {
+        Self {
+            data: [K::default(); N],
+        }
+    }
 }
 
 #[cfg(test)]
@@ -58,6 +60,4 @@ mod test {
         v1.scl(2.);
         assert_eq!(v1, res, "scale {:?} and {:?}", v1, res);
     }
-
-    
 }
