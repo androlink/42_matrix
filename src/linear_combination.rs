@@ -36,6 +36,7 @@ where
 #[cfg(test)]
 mod test {
     use super::*;
+
     #[test]
     fn test_linear_combination() {
         let e1 = Vector::from([1., 0., 0.]);
