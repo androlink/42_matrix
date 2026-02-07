@@ -1,4 +1,4 @@
-use crate::vector::Vector;
+use super::Vector;
 
 impl<K: Copy + std::ops::SubAssign<K>, const N: usize> Vector<K, N> {
     pub fn sub(&mut self, v: &Vector<K, N>) {

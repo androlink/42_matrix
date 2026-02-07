@@ -2,6 +2,8 @@ use super::Matrix;
 
 use std::ops::Add;
 use std::ops::AddAssign;
+use std::ops::Div;
+use std::ops::DivAssign;
 use std::ops::Index;
 use std::ops::IndexMut;
 use std::ops::Mul;
@@ -86,6 +88,33 @@ impl<K: MulAssign + Clone + Copy, const N: usize, const M: usize> MulAssign<K> f
     }
 }
 
+impl<K: Div<Output = K> + Default + Copy, const N: usize, const M: usize> Div<K>
+    for Matrix<K, N, M>
+{
+    type Output = Self;
+
+    fn div(self, other: K) -> Self::Output {
+        let mut v: Matrix<K, N, M> = Matrix::from([[K::default(); N]; M]);
+        for i in 0..M {
+            for j in 0..N {
+                v.data[i][j] = self.data[i][j] / other;
+            }
+        }
+        v
+    }
+}
+
+impl<K: DivAssign + Clone + Copy, const N: usize, const M: usize> DivAssign<K> for Matrix<K, N, M> {
+    fn div_assign(&mut self, other: K) {
+        for i in 0..M {
+            for j in 0..N {
+                self.data[i][j] /= other;
+            }
+        }
+        ()
+    }
+}
+
 impl<K: Clone + Copy, const N: usize, const M: usize> Index<usize> for Matrix<K, N, M> {
     type Output = [K; N];
     fn index(&self, index: usize) -> &Self::Output {
@@ -153,6 +182,26 @@ mod test {
         let scalar = 2.;
         let res = [[2., 4.], [6., 8.]].into();
         let result = m1 * scalar;
+        assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
+    }
+
+
+
+    #[test]
+    fn div_assign_test() {
+        let mut m1 = Matrix::from([[2., 4.], [6., 8.]]);
+        let scalar = 2.;
+        let res = [[1., 2.], [3., 4.]].into();
+        m1 /= scalar;
+        assert_eq!(m1, res, "result {:?}, assert {:?}", m1, res);
+    }
+    
+    #[test]
+    fn div_test() {
+        let m1 = Matrix::from([[2., 4.], [6., 8.]]);
+        let scalar = 2.;
+        let res = [[1., 2.], [3., 4.]].into();
+        let result = m1 / scalar;
         assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
     }
 }
