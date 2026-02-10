@@ -7,12 +7,12 @@ pub fn linear_combination<K, const N: usize, const S: usize>(
     coefs: &[K; S],
 ) -> Vector<K, N>
 where
-    K: Clone + Copy + Default + std::ops::Mul<Output = K>,
-    Vector<K, N>: std::ops::Mul<K, Output = Vector<K, N>> + std::ops::AddAssign,
+    K: Clone + Copy + Default + std::ops::Mul<Output = K> + std::ops::Add,
+    Vector<K, N>: std::ops::Mul<K, Output = Vector<K, N>> + std::ops::Add<Output = Vector<K, N>>,
 {
-    let mut ret: Vector<K, N> = Vector::default();
-    u.iter().zip(coefs.iter()).for_each(|(v, c)| ret += *v * *c);
-    ret
+    u.iter()
+        .zip(coefs.iter())
+        .fold(Vector::default(), |acc, (v, c)| acc + *v * *c)
 }
 
 // pub fn linear_combination<const N: usize, const S: usize>(u: &[Vector<f32, N>; S], coefs: &[f32; S]) -> Vector<f32, N>
