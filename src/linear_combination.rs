@@ -10,11 +10,9 @@ where
     K: Clone + Copy + Default + std::ops::Mul<Output = K>,
     Vector<K, N>: std::ops::Mul<K, Output = Vector<K, N>> + std::ops::AddAssign,
 {
-    let mut v: Vector<K, N> = Vector::default();
-    for i in 0..S {
-        v += u[i] * coefs[i];
-    }
-    v
+    let mut ret: Vector<K, N> = Vector::default();
+    u.iter().zip(coefs.iter()).for_each(|(v, c)| ret += *v * *c);
+    ret
 }
 
 // pub fn linear_combination<const N: usize, const S: usize>(u: &[Vector<f32, N>; S], coefs: &[f32; S]) -> Vector<f32, N>

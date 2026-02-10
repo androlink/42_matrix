@@ -30,7 +30,8 @@ impl<K: Add<Output = K> + Default + Copy, const N: usize, const M: usize> Add fo
 
 impl<K: AddAssign + Clone + Copy, const N: usize, const M: usize> AddAssign for Matrix<K, N, M> {
     fn add_assign(&mut self, other: Self) {
-        self.data.iter_mut()
+        self.data
+            .iter_mut()
             .zip(other.data.iter())
             .for_each(|(row_a, row_b)| {
                 row_a
@@ -60,7 +61,8 @@ impl<K: Sub<Output = K> + Default + Copy, const N: usize, const M: usize> Sub fo
 
 impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> SubAssign for Matrix<K, N, M> {
     fn sub_assign(&mut self, other: Self) {
-        self.data.iter_mut()
+        self.data
+            .iter_mut()
             .zip(other.data.iter())
             .for_each(|(row_a, row_b)| {
                 row_a
