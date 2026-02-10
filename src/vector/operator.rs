@@ -18,7 +18,6 @@ impl<K: AddAssign + Clone + Copy, const N: usize> AddAssign for Vector<K, N> {
         for i in 0..N {
             self.data[i] += other.data[i];
         }
-        ()
     }
 }
 
@@ -39,7 +38,6 @@ impl<K: SubAssign + Clone + Copy, const N: usize> SubAssign for Vector<K, N> {
         for i in 0..N {
             self.data[i] -= other.data[i];
         }
-        ()
     }
 }
 
@@ -47,11 +45,9 @@ impl<K: Mul<Output = K> + Default + Copy, const N: usize> Mul<K> for Vector<K, N
     type Output = Self;
 
     fn mul(self, scalar: K) -> Self::Output {
-        let mut v: Vector<K, N> = Vector::from([K::default(); N]);
-        for i in 0..N {
-            v.data[i] = self.data[i] * scalar;
-        }
-        v
+        let mut data = self.data;
+        data.iter_mut().for_each(|d| *d = *d * scalar);
+        Vector {data}
     }
 }
 
@@ -60,10 +56,7 @@ where
     K: MulAssign + Clone + Copy,
 {
     fn mul_assign(&mut self, scalar: K) {
-        for i in 0..N {
-            self.data[i] *= scalar;
-        }
-        ()
+        self.data.iter_mut().for_each(|d| *d *= scalar);
     }
 }
 
