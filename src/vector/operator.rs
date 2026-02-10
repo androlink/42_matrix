@@ -47,7 +47,7 @@ impl<K: Mul<Output = K> + Default + Copy, const N: usize> Mul<K> for Vector<K, N
     fn mul(self, scalar: K) -> Self::Output {
         let mut data = self.data;
         data.iter_mut().for_each(|d| *d = *d * scalar);
-        Vector {data}
+        Vector { data }
     }
 }
 
