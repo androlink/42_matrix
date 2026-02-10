@@ -15,23 +15,29 @@ impl<K: Add<Output = K> + Default + Copy, const N: usize, const M: usize> Add fo
     type Output = Self;
 
     fn add(self, other: Self) -> Self::Output {
-        let mut v: Matrix<K, N, M> = Matrix::from([[K::default(); N]; M]);
-        for i in 0..M {
-            for j in 0..N {
-                v.data[i][j] = self.data[i][j] + other.data[i][j];
-            }
-        }
-        v
+        let mut data = self.data;
+        data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(row_a, row_b)| {
+                row_a
+                    .iter_mut()
+                    .zip(row_b.iter())
+                    .for_each(|(value_a, value_b)| *value_a = *value_a + *value_b)
+            });
+        Matrix { data }
     }
 }
 
 impl<K: AddAssign + Clone + Copy, const N: usize, const M: usize> AddAssign for Matrix<K, N, M> {
     fn add_assign(&mut self, other: Self) {
-        for i in 0..M {
-            for j in 0..N {
-                self.data[i][j] += other.data[i][j];
-            }
-        }
+        self.data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(row_a, row_b)| {
+                row_a
+                    .iter_mut()
+                    .zip(row_b.iter())
+                    .for_each(|(value_a, value_b)| *value_a += *value_b)
+            });
     }
 }
 
@@ -39,23 +45,29 @@ impl<K: Sub<Output = K> + Default + Copy, const N: usize, const M: usize> Sub fo
     type Output = Self;
 
     fn sub(self, other: Self) -> Self::Output {
-        let mut v: Matrix<K, N, M> = Matrix::from([[K::default(); N]; M]);
-        for i in 0..M {
-            for j in 0..N {
-                v.data[i][j] = self.data[i][j] - other.data[i][j];
-            }
-        }
-        v
+        let mut data = self.data;
+        data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(row_a, row_b)| {
+                row_a
+                    .iter_mut()
+                    .zip(row_b.iter())
+                    .for_each(|(value_a, value_b)| *value_a = *value_a - *value_b)
+            });
+        Matrix { data }
     }
 }
 
 impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> SubAssign for Matrix<K, N, M> {
     fn sub_assign(&mut self, other: Self) {
-        for i in 0..M {
-            for j in 0..N {
-                self.data[i][j] -= other.data[i][j];
-            }
-        }
+        self.data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(row_a, row_b)| {
+                row_a
+                    .iter_mut()
+                    .zip(row_b.iter())
+                    .for_each(|(value_a, value_b)| *value_a -= *value_b)
+            });
     }
 }
 

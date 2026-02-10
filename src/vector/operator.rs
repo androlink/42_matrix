@@ -5,19 +5,20 @@ impl<K: Add<Output = K> + Default + Copy, const N: usize> Add for Vector<K, N> {
     type Output = Self;
 
     fn add(self, other: Self) -> Self::Output {
-        let mut v: Vector<K, N> = Vector::from([K::default(); N]);
-        for i in 0..N {
-            v.data[i] = self.data[i] + other.data[i];
-        }
-        v
+        let mut data = self.data;
+        data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(a, b)| *a = *a + *b);
+        Vector { data }
     }
 }
 
 impl<K: AddAssign + Clone + Copy, const N: usize> AddAssign for Vector<K, N> {
     fn add_assign(&mut self, other: Self) {
-        for i in 0..N {
-            self.data[i] += other.data[i];
-        }
+        self.data
+            .iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(a, b)| *a += *b);
     }
 }
 
@@ -25,19 +26,20 @@ impl<K: Sub<Output = K> + Default + Copy, const N: usize> Sub for Vector<K, N> {
     type Output = Self;
 
     fn sub(self, other: Self) -> Self::Output {
-        let mut v: Vector<K, N> = Vector::from([K::default(); N]);
-        for i in 0..N {
-            v.data[i] = self.data[i] - other.data[i];
-        }
-        v
+        let mut data = self.data;
+        data.iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(a, b)| *a = *a - *b);
+        Vector { data }
     }
 }
 
 impl<K: SubAssign + Clone + Copy, const N: usize> SubAssign for Vector<K, N> {
     fn sub_assign(&mut self, other: Self) {
-        for i in 0..N {
-            self.data[i] -= other.data[i];
-        }
+        self.data
+            .iter_mut()
+            .zip(other.data.iter())
+            .for_each(|(a, b)| *a -= *b);
     }
 }
 
