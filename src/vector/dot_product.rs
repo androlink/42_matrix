@@ -1,10 +1,10 @@
-use std::{fmt::Debug, ops::{Add, Mul}};
+use std::ops::{Add, Mul};
 
 use super::Vector;
 
 impl<K, const N: usize> Vector<K, N>
 where
-    K: Default + Debug + Mul<Output = K> + Add<Output = K> + Clone + Copy,
+    K: Default + Mul<Output = K> + Add<Output = K> + Clone + Copy,
 {
     pub fn dot(&self, v: Self) -> K {
         self.data
