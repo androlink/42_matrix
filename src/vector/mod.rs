@@ -4,6 +4,8 @@ mod add;
 mod scale;
 mod sub;
 
+mod dot_product;
+
 pub type Vec2 = Vector<f32, 2>;
 pub type Vec3 = Vector<f32, 3>;
 
