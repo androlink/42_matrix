@@ -5,3 +5,6 @@ edition = "2024"
 
 [lib]
 crate-type = ["staticlib"]
+
+[dependencies]
+assert_float_eq = "1.2.0"
