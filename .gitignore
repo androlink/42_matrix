@@ -9,3 +9,7 @@ Cargo.lock
 .vscode/
 .rustc_info.json
 
+display
+assets/
+proj
+matrix_display/README.md

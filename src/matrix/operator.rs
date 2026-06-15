@@ -1,3 +1,5 @@
+use crate::vector::Vector;
+
 use super::Matrix;
 
 use std::ops::Add;
@@ -15,16 +17,12 @@ impl<K: Add<Output = K> + Default + Copy, const N: usize, const M: usize> Add fo
     type Output = Self;
 
     fn add(self, other: Self) -> Self::Output {
-        let mut data = self.data;
-        data.iter_mut()
+        let mut mat = self.clone();
+        mat.data
+            .iter_mut()
             .zip(other.data.iter())
-            .for_each(|(row_a, row_b)| {
-                row_a
-                    .iter_mut()
-                    .zip(row_b.iter())
-                    .for_each(|(value_a, value_b)| *value_a = *value_a + *value_b)
-            });
-        Matrix { data }
+            .for_each(|(v1, v2)| *v1 = v1.add(*v2));
+        mat
     }
 }
 
@@ -33,12 +31,7 @@ impl<K: AddAssign + Clone + Copy, const N: usize, const M: usize> AddAssign for 
         self.data
             .iter_mut()
             .zip(other.data.iter())
-            .for_each(|(row_a, row_b)| {
-                row_a
-                    .iter_mut()
-                    .zip(row_b.iter())
-                    .for_each(|(value_a, value_b)| *value_a += *value_b)
-            });
+            .for_each(|(v1, v2)| v1.add_assign(*v2));
     }
 }
 
@@ -46,16 +39,12 @@ impl<K: Sub<Output = K> + Default + Copy, const N: usize, const M: usize> Sub fo
     type Output = Self;
 
     fn sub(self, other: Self) -> Self::Output {
-        let mut data = self.data;
-        data.iter_mut()
+        let mut mat = self.clone();
+        mat.data
+            .iter_mut()
             .zip(other.data.iter())
-            .for_each(|(row_a, row_b)| {
-                row_a
-                    .iter_mut()
-                    .zip(row_b.iter())
-                    .for_each(|(value_a, value_b)| *value_a = *value_a - *value_b)
-            });
-        Matrix { data }
+            .for_each(|(v1, v2)| *v1 = v1.sub(*v2));
+        mat
     }
 }
 
@@ -64,12 +53,7 @@ impl<K: SubAssign + Clone + Copy, const N: usize, const M: usize> SubAssign for 
         self.data
             .iter_mut()
             .zip(other.data.iter())
-            .for_each(|(row_a, row_b)| {
-                row_a
-                    .iter_mut()
-                    .zip(row_b.iter())
-                    .for_each(|(value_a, value_b)| *value_a -= *value_b)
-            });
+            .for_each(|(v1, v2)| v1.sub_assign(*v2));
     }
 }
 
@@ -79,18 +63,13 @@ impl<K: Mul<Output = K> + Default + Copy, const N: usize, const M: usize> Mul<K>
     type Output = Self;
 
     fn mul(self, scalar: K) -> Self::Output {
-        let mut data = self.data;
-        data.iter_mut()
-            .for_each(|d| d.iter_mut().for_each(|d| *d = *d * scalar));
-        Matrix { data }
+        self.data.map(|v| v.mul(scalar)).into()
     }
 }
 
 impl<K: MulAssign + Clone + Copy, const N: usize, const M: usize> MulAssign<K> for Matrix<K, N, M> {
     fn mul_assign(&mut self, scalar: K) {
-        self.data
-            .iter_mut()
-            .for_each(|d| d.iter_mut().for_each(|d| *d *= scalar));
+        self.data.iter_mut().for_each(|v| v.mul_assign(scalar));
     }
 }
 
@@ -100,30 +79,25 @@ impl<K: Div<Output = K> + Default + Copy, const N: usize, const M: usize> Div<K>
     type Output = Self;
 
     fn div(self, scalar: K) -> Self::Output {
-        let mut data = self.data;
-        data.iter_mut()
-            .for_each(|d| d.iter_mut().for_each(|d| *d = *d / scalar));
-        Matrix { data }
+        self.data.map(|v| v.div(scalar)).into()
     }
 }
 
 impl<K: DivAssign + Clone + Copy, const N: usize, const M: usize> DivAssign<K> for Matrix<K, N, M> {
     fn div_assign(&mut self, scalar: K) {
-        self.data
-            .iter_mut()
-            .for_each(|d| d.iter_mut().for_each(|d| *d /= scalar));
+        self.data.iter_mut().for_each(|d| d.div_assign(scalar));
     }
 }
 
 impl<K: Clone + Copy, const N: usize, const M: usize> Index<usize> for Matrix<K, N, M> {
-    type Output = [K; N];
+    type Output = Vector<K, N>;
     fn index(&self, index: usize) -> &Self::Output {
         &self.data[index]
     }
 }
 
 impl<K: Clone + Copy, const N: usize, const M: usize> IndexMut<usize> for Matrix<K, N, M> {
-    fn index_mut(&mut self, index: usize) -> &mut [K; N] {
+    fn index_mut(&mut self, index: usize) -> &mut Vector<K, N> {
         &mut self.data[index]
     }
 }
