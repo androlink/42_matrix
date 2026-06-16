@@ -1,0 +1,27 @@
+use std::ops::AddAssign;
+
+use crate::matrix::Matrix;
+
+impl<K: Default + Copy + AddAssign<K>, const N: usize> Matrix<K, N, N> {
+    pub fn trace(&self) -> K {
+        let mut acc = K::default();
+        for i in 0..N {
+            acc += self[i][i];
+        }
+        acc
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::matrix::Matrix;
+    #[test]
+    fn trace() {
+        let u = Matrix::from([[1., 0.], [0., 1.]]);
+        assert_eq!(u.trace(), 2.);
+        let u = Matrix::from([[2., -5., 0.], [4., 3., 7.], [-2., 3., 4.]]);
+        assert_eq!(u.trace(), 9.);
+        let u = Matrix::from([[-2., -8., 4.], [1., -23., 4.], [0., 6., 4.]]);
+        assert_eq!(u.trace(), -21.);
+    }
+}

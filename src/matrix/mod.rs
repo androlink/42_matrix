@@ -12,6 +12,7 @@ mod sub;
 mod mul;
 
 mod operator;
+mod trace;
 mod transpose;
 
 pub type Mat2 = Matrix<f32, 2, 2>;
