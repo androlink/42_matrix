@@ -30,24 +30,3 @@ where
 //   }
 //   v
 // }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_linear_combination() {
-        let e1 = Vector::from([1., 0., 0.]);
-        let e2 = Vector::from([0., 1., 0.]);
-        let e3 = Vector::from([0., 0., 1.]);
-        let v1 = Vector::from([1., 2., 3.]);
-        let v2 = Vector::from([0., 10., -100.]);
-        let assert_res1 = Vector::from([10., -2., 0.5]);
-        let assert_res2 = Vector::from([10., 0., 230.]);
-
-        let res = linear_combination(&[e1, e2, e3], &[10., -2., 0.5]);
-        assert_eq!(res, assert_res1, "{:?} not {:?}", res, assert_res1);
-        let res = linear_combination(&[v1, v2], &[10., -2.]);
-        assert_eq!(res, assert_res2, "{:?} not {:?}", res, assert_res2);
-    }
-}

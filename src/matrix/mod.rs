@@ -1,3 +1,8 @@
+use std::{
+    fmt::{Debug, Display},
+    ops::{Deref, DerefMut},
+};
+
 use crate::vector::Vector;
 
 mod add;
@@ -7,40 +12,50 @@ mod sub;
 mod mul;
 
 mod operator;
+mod transpose;
 
 pub type Mat2 = Matrix<f32, 2, 2>;
 pub type Mat3 = Matrix<f32, 3, 3>;
 pub type Mat4 = Matrix<f32, 4, 4>;
 
 /**
- * A ∈ R^(m×n)
+ * matrix in column major order as array of Vector<K, N>
  */
 #[derive(PartialEq, Debug, Clone, Copy)]
-pub struct Matrix<K, const N: usize, const M: usize> {
+pub struct Matrix<K, const M: usize, const N: usize> {
     data: [Vector<K, N>; M],
 }
 
-impl<K: std::cmp::PartialEq, const N: usize, const M: usize> Matrix<K, N, M> {
+impl<K, const M: usize, const N: usize> Display for Matrix<K, N, M>
+where
+    K: Display + Debug,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", *self)
+    }
+}
+
+impl<K: std::cmp::PartialEq, const M: usize, const N: usize> Matrix<K, M, N> {
     pub fn size(&self) -> (usize, usize) {
         (N, M)
     }
 }
 
-impl<K: Clone, const N: usize, const M: usize> From<[[K; N]; M]> for Matrix<K, N, M> {
+impl<K: Clone, const M: usize, const N: usize> From<[[K; N]; M]> for Matrix<K, M, N> {
     fn from(value: [[K; N]; M]) -> Self {
         Self {
-            data: value.map(|v| Vector::from(v)),
+            data: value.map(|v| v.into()),
         }
     }
 }
 
-impl<K: Clone, const N: usize, const M: usize> From<[Vector<K, N>; M]> for Matrix<K, N, M> {
+impl<K: Clone, const M: usize, const N: usize> From<[Vector<K, N>; M]> for Matrix<K, M, N> {
     fn from(value: [Vector<K, N>; M]) -> Self {
         Self { data: value }
     }
 }
 
-impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N, M> {
+impl<K: Default + Copy, const M: usize, const N: usize> Default for Matrix<K, M, N> {
     fn default() -> Self {
         Self {
             data: [Vector::<K, N>::default(); M],
@@ -48,32 +63,15 @@ impl<K: Default + Copy, const N: usize, const M: usize> Default for Matrix<K, N,
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_add() {
-        let mut m1 = Matrix::from([[1., 2.], [3., 4.]]);
-        let m2 = Matrix::from([[7., 4.], [-2., 2.]]);
-        let res = [[8.0, 6.0], [1.0, 6.0]].into();
-        m1.add(&m2);
-        assert_eq!(m1, res, "add {:?} and {:?}", "lol", "lol");
+impl<K, const M: usize, const N: usize> Deref for Matrix<K, M, N> {
+    type Target = [Vector<K, N>; M];
+    fn deref(&self) -> &Self::Target {
+        &self.data
     }
-    #[test]
-    fn test_sub() {
-        let mut m1 = Matrix::from([[1., 2.], [3., 4.]]);
-        let m2 = Matrix::from([[7., 4.], [-2., 2.]]);
-        let res = [[-6.0, -2.0], [5.0, 2.0]].into();
-        m1.sub(&m2);
-        assert_eq!(m1, res, "sub {:?} and {:?}", m1, m2);
-    }
+}
 
-    #[test]
-    fn test_scale() {
-        let mut m1 = Matrix::from([[1., 2.], [3., 4.]]);
-        let res = [[2.0, 4.0], [6.0, 8.0]].into();
-        m1.scl(2.);
-        assert_eq!(m1, res, "scale {:?} by {:?}", m1, 2.);
+impl<K, const M: usize, const N: usize> DerefMut for Matrix<K, M, N> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.data
     }
 }

@@ -1,6 +1,6 @@
 use super::Matrix;
 
-impl<K: Copy + std::ops::MulAssign<K>, const N: usize, const M: usize> Matrix<K, N, M> {
+impl<K: Copy + std::ops::MulAssign<K>, const M: usize, const N: usize> Matrix<K, M, N> {
     pub fn scl(&mut self, a: K) {
         *self *= a;
     }

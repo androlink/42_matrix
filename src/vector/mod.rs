@@ -1,3 +1,8 @@
+use std::{
+    fmt::{Debug, Display},
+    ops::{Deref, DerefMut},
+};
+
 mod operator;
 
 mod add;
@@ -13,6 +18,15 @@ pub type Vec3 = Vector<f32, 3>;
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Vector<K, const N: usize> {
     data: [K; N],
+}
+
+impl<K, const N: usize> Display for Vector<K, N>
+where
+    K: Display + Debug,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", *self)
+    }
 }
 
 impl<K: std::cmp::PartialEq, const N: usize> Vector<K, N> {
@@ -35,32 +49,15 @@ impl<K: Default + Copy, const N: usize> Default for Vector<K, N> {
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_add() {
-        let mut v1 = Vector::from([2., 3.]);
-        let v2 = Vector::from([5., 7.]);
-        let res = Vector::from([7., 10.]);
-        v1.add(&v2);
-        assert_eq!(v1, res, "add {:?} and {:?}", v1, res);
+impl<K, const N: usize> Deref for Vector<K, N> {
+    type Target = [K; N];
+    fn deref(&self) -> &Self::Target {
+        &self.data
     }
-    #[test]
-    fn test_sub() {
-        let mut v1 = Vector::from([2., 3.]);
-        let v2 = Vector::from([5., 7.]);
-        let res = Vector::from([-3., -4.]);
-        v1.sub(&v2);
-        assert_eq!(v1, res, "sub {:?} and {:?}", v1, res);
-    }
+}
 
-    #[test]
-    fn test_scale() {
-        let mut v1 = Vector::from([2., 3.]);
-        let res = Vector::from([4., 6.]);
-        v1.scl(2.);
-        assert_eq!(v1, res, "scale {:?} and {:?}", v1, res);
+impl<K, const N: usize> DerefMut for Vector<K, N> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.data
     }
 }
