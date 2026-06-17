@@ -1,16 +1,16 @@
 use std::{
     fmt::{Debug, Display},
-    ops::{Deref, DerefMut},
+    ops::{Deref, DerefMut, Index, IndexMut},
 };
 
-mod operator;
-
 mod add;
-mod scale;
+mod div;
+mod mul;
 mod sub;
 
 mod dot_product;
 mod norm;
+mod scale;
 
 pub type Vec2 = Vector<f32, 2>;
 pub type Vec3 = Vector<f32, 3>;
@@ -59,5 +59,18 @@ impl<K, const N: usize> Deref for Vector<K, N> {
 impl<K, const N: usize> DerefMut for Vector<K, N> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.data
+    }
+}
+
+impl<K: Clone + Copy, const N: usize> Index<usize> for Vector<K, N> {
+    type Output = K;
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.data[index]
+    }
+}
+
+impl<K: Clone + Copy, const N: usize> IndexMut<usize> for Vector<K, N> {
+    fn index_mut(&mut self, index: usize) -> &mut K {
+        &mut self.data[index]
     }
 }

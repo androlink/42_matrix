@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod matrix {
-    use crate::matrix::Matrix;
+    use crate::{matrix::Matrix, vector::Vector};
 
     #[test]
     fn test_add() {
@@ -96,6 +96,27 @@ mod matrix {
         let res = [[1., 2.], [3., 4.]].into();
         let result = m1 / scalar;
         assert_eq!(result, res, "result {:?}, assert {:?}", result, res);
+    }
+
+    #[test]
+    fn mul_vector() {
+        let u = Matrix::from([[1., 0.], [0., 1.]]);
+        let v = Vector::from([4., 2.]);
+        assert_eq!(u * v, [4., 2.].into());
+        let u = Matrix::from([[2., 0.], [0., 2.]]);
+        assert_eq!(u * v, [8., 4.].into());
+        let u = Matrix::from([[2., -2.], [-2., 2.]]);
+        assert_eq!(u * v, [4., -4.].into());
+    }
+    #[test]
+    fn mul_matrix() {
+        let u = Matrix::from([[1., 0.], [0., 1.]]);
+        let v = Matrix::from([[1., 0.], [0., 1.]]);
+        assert_eq!(u * v, [[1., 0.], [0., 1.]].into());
+        let v = Matrix::from([[2., 1.], [4., 2.]]);
+        assert_eq!(u * v, [[2., 1.], [4., 2.]].into());
+        let u = Matrix::from([[3., -5.], [6., 8.]]);
+        assert_eq!(u * v, [[-14., -7.], [44., 22.]].into());
     }
 }
 

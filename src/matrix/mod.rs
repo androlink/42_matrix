@@ -1,17 +1,16 @@
 use std::{
     fmt::{Debug, Display},
-    ops::{Deref, DerefMut},
+    ops::{Deref, DerefMut, Index, IndexMut},
 };
 
 use crate::vector::Vector;
 
 mod add;
+mod div;
+mod mul;
 mod scale;
 mod sub;
 
-mod mul;
-
-mod operator;
 mod trace;
 mod transpose;
 
@@ -74,5 +73,18 @@ impl<K, const M: usize, const N: usize> Deref for Matrix<K, M, N> {
 impl<K, const M: usize, const N: usize> DerefMut for Matrix<K, M, N> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.data
+    }
+}
+
+impl<K: Clone + Copy, const M: usize, const N: usize> Index<usize> for Matrix<K, M, N> {
+    type Output = Vector<K, N>;
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.data[index]
+    }
+}
+
+impl<K: Clone + Copy, const M: usize, const N: usize> IndexMut<usize> for Matrix<K, M, N> {
+    fn index_mut(&mut self, index: usize) -> &mut Vector<K, N> {
+        &mut self.data[index]
     }
 }
