@@ -6,7 +6,10 @@ impl<K: Mul<Output = K> + Default + Copy, const M: usize, const N: usize> Mul<&K
     for Matrix<K, M, N>
 {
     type Output = Self;
-
+    /**
+     *
+     * complexity: O(N*M)
+     */
     fn mul(self, scalar: &K) -> Self::Output {
         self * *scalar
     }
@@ -16,7 +19,10 @@ impl<K: Mul<Output = K> + Default + Copy, const M: usize, const N: usize> Mul<K>
     for Matrix<K, M, N>
 {
     type Output = Self;
-
+    /**
+     *
+     * complexity: O(N*M)
+     */
     fn mul(self, scalar: K) -> Self::Output {
         self.data.map(|v| v.mul(scalar)).into()
     }
@@ -25,12 +31,20 @@ impl<K: Mul<Output = K> + Default + Copy, const M: usize, const N: usize> Mul<K>
 impl<K: MulAssign + Clone + Copy, const M: usize, const N: usize> MulAssign<&K>
     for Matrix<K, M, N>
 {
+    /**
+     *
+     * complexity: O(N*M)
+     */
     fn mul_assign(&mut self, scalar: &K) {
         *self *= *scalar
     }
 }
 
 impl<K: MulAssign + Clone + Copy, const M: usize, const N: usize> MulAssign<K> for Matrix<K, M, N> {
+    /**
+     *
+     * complexity: O(N*M)
+     */
     fn mul_assign(&mut self, scalar: K) {
         self.data.iter_mut().for_each(|v| v.mul_assign(scalar));
     }
@@ -41,7 +55,10 @@ where
     K: Default + Copy + Mul<Output = K> + Add<Output = K>,
 {
     type Output = Matrix<K, M, P>;
-
+    /**
+     *
+     * complexity: O(NP + MPN)
+     */
     fn mul(self, rhs: Matrix<K, N, P>) -> Self::Output {
         let rhs = rhs.transpose();
         let mut res = Self::Output::default();
@@ -57,7 +74,10 @@ where
     K: Default + Copy + Mul<Output = K> + Add<Output = K>,
 {
     type Output = Matrix<K, M, P>;
-
+    /**
+     *
+     * complexity: O(MN + MP)
+     */
     fn mul(self, rhs: &Matrix<K, N, P>) -> Self::Output {
         self * *rhs
     }
@@ -68,7 +88,10 @@ where
     K: Default + Copy + Mul<Output = K> + Add<Output = K>,
 {
     type Output = Vector<K, M>;
-
+    /**
+     *
+     * complexity: O(MN)
+     */
     fn mul(self, rhs: &Vector<K, N>) -> Self::Output {
         self * *rhs
     }
@@ -79,7 +102,10 @@ where
     K: Default + Copy + Mul<Output = K> + Add<Output = K>,
 {
     type Output = Vector<K, M>;
-
+    /**
+     *
+     * complexity: O(MN)
+     */
     fn mul(self, rhs: Vector<K, N>) -> Self::Output {
         let mut vec = Self::Output::default();
         vec.iter_mut()

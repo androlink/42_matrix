@@ -3,6 +3,10 @@ use std::ops::AddAssign;
 use crate::matrix::Matrix;
 
 impl<K: Default + Copy + AddAssign<K>, const N: usize> Matrix<K, N, N> {
+    /**
+     *
+     * complexity: O(N)
+     */
     pub fn trace(&self) -> K {
         let mut acc = K::default();
         for i in 0..N {

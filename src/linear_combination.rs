@@ -1,7 +1,9 @@
 use crate::vector::Vector;
 
-// V1 * C1 + V2 * C2 + ... + Vs * Cs;
-
+/**
+ *
+ * complexity: O(N)
+ */
 pub fn linear_combination<K, const N: usize, const S: usize>(
     u: &[Vector<K, N>; S],
     coefs: &[K; S],

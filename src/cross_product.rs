@@ -2,6 +2,10 @@ use std::ops::{Mul, Sub};
 
 use crate::vector::Vector;
 
+/**
+ *
+ * complexity: O(N)
+ */
 pub fn cross_product<K>(u: Vector<K, 3>, v: Vector<K, 3>) -> Vector<K, 3>
 where
     K: Copy,

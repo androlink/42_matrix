@@ -6,6 +6,10 @@ impl<K, const N: usize> Vector<K, N>
 where
     K: Default + Mul<Output = K> + Add<Output = K> + Clone + Copy,
 {
+    /**
+     *
+     * complexity: O(N)
+     */
     pub fn dot(&self, v: Self) -> K {
         self.data
             .iter()

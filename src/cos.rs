@@ -1,5 +1,9 @@
 use crate::vector::Vector;
 
+/**
+ *
+ * complexity: O(N)
+ */
 pub fn angle_cos<K, const N: usize>(u: &Vector<K, N>, v: &Vector<K, N>) -> f32
 where
     K: Clone,

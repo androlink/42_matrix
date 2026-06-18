@@ -1,5 +1,9 @@
 use std::ops::{AddAssign, MulAssign, SubAssign};
 
+/**
+ *
+ * complexity: O(N)
+ */
 pub fn lerp<V>(u: V, v: V, t: f32) -> V
 where
     V: SubAssign + Copy + MulAssign<f32> + AddAssign,
