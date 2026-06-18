@@ -8,7 +8,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     pub fn dot(&self, v: Self) -> K {
         self.data

@@ -2,7 +2,7 @@ use crate::vector::Vector;
 
 /**
  *
- * complexity: O(N)
+ * time complexity: O(N)
  */
 pub fn linear_combination<K, const N: usize, const S: usize>(
     u: &[Vector<K, N>; S],

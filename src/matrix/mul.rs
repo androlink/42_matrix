@@ -8,7 +8,7 @@ impl<K: Mul<Output = K> + Default + Copy, const M: usize, const N: usize> Mul<&K
     type Output = Self;
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn mul(self, scalar: &K) -> Self::Output {
         self * *scalar
@@ -21,7 +21,7 @@ impl<K: Mul<Output = K> + Default + Copy, const M: usize, const N: usize> Mul<K>
     type Output = Self;
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn mul(self, scalar: K) -> Self::Output {
         self.data.map(|v| v.mul(scalar)).into()
@@ -33,7 +33,7 @@ impl<K: MulAssign + Clone + Copy, const M: usize, const N: usize> MulAssign<&K>
 {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn mul_assign(&mut self, scalar: &K) {
         *self *= *scalar
@@ -43,7 +43,7 @@ impl<K: MulAssign + Clone + Copy, const M: usize, const N: usize> MulAssign<&K>
 impl<K: MulAssign + Clone + Copy, const M: usize, const N: usize> MulAssign<K> for Matrix<K, M, N> {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn mul_assign(&mut self, scalar: K) {
         self.data.iter_mut().for_each(|v| v.mul_assign(scalar));
@@ -57,7 +57,7 @@ where
     type Output = Matrix<K, M, P>;
     /**
      *
-     * complexity: O(NP + MPN)
+     * time complexity: O(NP + MPN)
      */
     fn mul(self, rhs: Matrix<K, N, P>) -> Self::Output {
         let rhs = rhs.transpose();
@@ -76,7 +76,7 @@ where
     type Output = Matrix<K, M, P>;
     /**
      *
-     * complexity: O(MN + MP)
+     * time complexity: O(MN + MP)
      */
     fn mul(self, rhs: &Matrix<K, N, P>) -> Self::Output {
         self * *rhs
@@ -90,7 +90,7 @@ where
     type Output = Vector<K, M>;
     /**
      *
-     * complexity: O(MN)
+     * time complexity: O(MN)
      */
     fn mul(self, rhs: &Vector<K, N>) -> Self::Output {
         self * *rhs
@@ -104,7 +104,7 @@ where
     type Output = Vector<K, M>;
     /**
      *
-     * complexity: O(MN)
+     * time complexity: O(MN)
      */
     fn mul(self, rhs: Vector<K, N>) -> Self::Output {
         let mut vec = Self::Output::default();

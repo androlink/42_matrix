@@ -6,7 +6,7 @@ impl<K: Mul<Output = K> + Copy, const N: usize> Mul<K> for Vector<K, N> {
     type Output = Self;
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn mul(self, scalar: K) -> Self::Output {
         self.map(|v| v * scalar).into()
@@ -17,7 +17,7 @@ impl<K: Mul<Output = K> + Copy, const N: usize> Mul<&K> for Vector<K, N> {
     type Output = Self;
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn mul(self, scalar: &K) -> Self::Output {
         self * *scalar
@@ -30,7 +30,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn mul_assign(&mut self, scalar: K) {
         self.iter_mut().for_each(|d| *d *= scalar);
@@ -43,7 +43,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn mul_assign(&mut self, scalar: &K) {
         *self *= *scalar

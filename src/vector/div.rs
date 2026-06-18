@@ -6,7 +6,7 @@ impl<K: Div<Output = K> + Default + Copy, const N: usize> Div<K> for Vector<K, N
     type Output = Self;
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn div(self, scalar: K) -> Self::Output {
         self.map(|v| v / scalar).into()
@@ -17,7 +17,7 @@ impl<K: Div<Output = K> + Default + Copy, const N: usize> Div<&K> for Vector<K, 
     type Output = Self;
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn div(self, scalar: &K) -> Self::Output {
         self / *scalar
@@ -30,7 +30,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn div_assign(&mut self, scalar: K) {
         self.data.iter_mut().for_each(|d| *d /= scalar);
@@ -43,7 +43,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     fn div_assign(&mut self, scalar: &K) {
         *self /= *scalar

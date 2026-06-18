@@ -5,7 +5,7 @@ use crate::matrix::Matrix;
 impl<K: Default + Copy + AddAssign<K>, const N: usize> Matrix<K, N, N> {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     pub fn trace(&self) -> K {
         let mut acc = K::default();

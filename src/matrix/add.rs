@@ -5,7 +5,7 @@ use super::Matrix;
 impl<K: Copy + std::ops::AddAssign<K>, const M: usize, const N: usize> Matrix<K, M, N> {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     pub fn add(&mut self, v: &Matrix<K, M, N>) {
         *self += *v;
@@ -18,7 +18,7 @@ impl<K: Add<Output = K> + Default + Copy, const M: usize, const N: usize> Add<&M
     type Output = Self;
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn add(self, other: &Self) -> Self::Output {
         self + *other
@@ -31,7 +31,7 @@ impl<K: Add<Output = K> + Default + Copy, const M: usize, const N: usize> Add<Ma
     type Output = Self;
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn add(self, other: Self) -> Self::Output {
         let mut mat = self;
@@ -48,7 +48,7 @@ impl<K: AddAssign + Clone + Copy, const M: usize, const N: usize> AddAssign<&Mat
 {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn add_assign(&mut self, other: &Self) {
         *self += *other
@@ -60,7 +60,7 @@ impl<K: AddAssign + Clone + Copy, const M: usize, const N: usize> AddAssign<Matr
 {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn add_assign(&mut self, other: Self) {
         self.data

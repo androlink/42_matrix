@@ -5,7 +5,7 @@ use super::Matrix;
 impl<K: Copy + std::ops::SubAssign<K>, const M: usize, const N: usize> Matrix<K, M, N> {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     pub fn sub(&mut self, v: &Matrix<K, M, N>) {
         *self -= *v;
@@ -19,7 +19,7 @@ impl<K: Sub<Output = K> + Default + Copy, const M: usize, const N: usize> Sub<&M
 
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn sub(self, other: &Self) -> Self::Output {
         self - *other
@@ -32,7 +32,7 @@ impl<K: Sub<Output = K> + Default + Copy, const M: usize, const N: usize> Sub<Ma
     type Output = Self;
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn sub(self, other: Self) -> Self::Output {
         let mut mat = self;
@@ -49,7 +49,7 @@ impl<K: SubAssign + Clone + Copy, const M: usize, const N: usize> SubAssign<&Mat
 {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn sub_assign(&mut self, other: &Self) {
         *self -= *other
@@ -61,7 +61,7 @@ impl<K: SubAssign + Clone + Copy, const M: usize, const N: usize> SubAssign<Matr
 {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     fn sub_assign(&mut self, other: Self) {
         self.data

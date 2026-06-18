@@ -3,7 +3,7 @@ use crate::matrix::Matrix;
 impl<K: Default + Copy, const M: usize, const N: usize> Matrix<K, M, N> {
     /**
      *
-     * complexity: O(N*M)
+     * time complexity: O(N*M)
      */
     pub fn transpose(&self) -> Matrix<K, N, M> {
         let mut m: Matrix<K, N, M> = [[K::default(); M]; N].into();

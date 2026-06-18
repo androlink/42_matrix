@@ -6,7 +6,7 @@ where
 {
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     pub fn norm_1(&self) -> f32 {
         self.data
@@ -16,7 +16,7 @@ where
 
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     pub fn norm(&self) -> f32 {
         self.data
@@ -27,7 +27,7 @@ where
 
     /**
      *
-     * complexity: O(N)
+     * time complexity: O(N)
      */
     pub fn norm_inf(&self) -> f32 {
         self.data
